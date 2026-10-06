@@ -12,8 +12,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "preview:cloudflare": "wrangler pages dev dist",
-    "deploy:canary": "astro check && astro build && wrangler pages deploy dist --branch=canary",
-    "deploy:production": "astro check && astro build && wrangler pages deploy dist --branch=main",
     "test": "node --test tests/*.test.mjs",
     "astro": "astro",
     "wrangler": "wrangler"
