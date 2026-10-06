@@ -1,0 +1,17 @@
+---
+interface Props {
+  date: Date;
+  readingTime: string;
+}
+
+const { date, readingTime } = Astro.props;
+const formattedDate = new Intl.DateTimeFormat('en', {
+  year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+}).format(date);
+---
+
+<p class="post-meta">
+  <time datetime={date.toISOString()}>{formattedDate}</time>
+  <span aria-hidden="true">·</span>
+  <span>{readingTime}</span>
+</p>

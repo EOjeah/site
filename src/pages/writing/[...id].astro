@@ -1,0 +1,36 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostMeta from '../../components/PostMeta.astro';
+import { site } from '../../site';
+
+export async function getStaticPaths() {
+  return (await getCollection('blog')).map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+interface Props { post: CollectionEntry<'blog'> }
+const { post } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await render(post);
+---
+
+<BaseLayout title={`${post.data.title} — ${site.name}`} description={post.data.description}>
+  <main id="main" class="article-page">
+    <a class="back-link" href="/#writing">← All writing</a>
+    <article>
+      <header class="article-header">
+        <h1>{post.data.title}</h1>
+        <PostMeta date={post.data.publishedAt} readingTime={remarkPluginFrontmatter.minutesRead} />
+        {post.data.updatedAt && (
+          <p class="updated-date">Updated <time datetime={post.data.updatedAt.toISOString()}>
+            {post.data.updatedAt.toLocaleDateString('en', { dateStyle: 'medium', timeZone: 'UTC' })}
+          </time></p>
+        )}
+        <p class="article-description">{post.data.description}</p>
+      </header>
+      <div class="prose"><Content /></div>
+    </article>
+  </main>
+</BaseLayout>

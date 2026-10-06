@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../site';
+---
+
+<BaseLayout title={`Page not found — ${site.name}`}>
+  <main id="main" class="introduction">
+    <h1>Page not found.</h1>
+    <p>This address doesn’t match a published page.</p>
+    <p><a href="/">Back to the homepage</a></p>
+  </main>
+</BaseLayout>
